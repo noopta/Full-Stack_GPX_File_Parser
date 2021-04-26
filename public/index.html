@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ASSIGNMENT THREE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CHANGE ME">
+  <meta name="keywords" content="CHANGE ME">
+  <meta name="author" content="CHANGE ME">
+  <!-- Load jquery, bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+  <!-- Custom CSS End -->
+</head>
+
+<body>
+  <!--
+    <h3>Download test</h3>
+    If the A3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link below will download it from the server.<br>
+    <a href="simple.gpx" download >simple.gpx</a>
+    <p></p>
+
+    <hr>
+    <div id="blah">I am blah</div>
+    <hr>
+    <form ref='someform'
+          id='someform'>
+          <div class="form-group">
+                <label for="entryBox">Last Name</label>
+                <input type="text" class="form-control" id="entryBox" value="Value" placeholder="Placeholder">
+          </div>
+        <div class="form-group">
+            <input type='submit' class="btn btn-secondary">
+        </div>
+    </form>
+    -->
+
+  <div id="tag" class="mainContainer">
+    <div class="headingTitle">
+      <h1>GPX Parser</h1>
+    </div>
+
+    <div class="subheadingSection">
+      <h2>File Log Panel</h2>
+      <p>View all the GPX files on the server below.</p>
+      <p>Number of files: <span class="numberOfFiles">0</span></p>
+      <div id="filePanel" class="allFiles">
+
+      </div>
+    </div>
+
+
+    <div class="sub-main">
+      <button class="button-two"><span><a href="#popup1">GPX View Panel</a></span></button>
+    </div>
+
+  </div>
+
+  <div id="popup1" class="overlay">
+    <div class="popup">
+      <h2>GPX View Panel</h2>
+
+      <div id="theMenu" class="dropdown toggle">
+        <input id="t1" type="checkbox" checked>
+        <label id="l1" for="t1" class="labelTitle">Select File</label>
+        <ul id="list">
+
+        </ul>
+      </div>
+      <a class="close" href="#" onclick="testFunction()">&times;</a>
+      <div class="content">
+        <div class="routesSection">
+          <h2>Routes</h2>
+          <table id="routesTable">
+            <tr>
+              <th>Other Data</th>
+              <th>Component</th>
+              <th>Name</th>
+              <th>Number of Points</th>
+              <th>Length</th>
+              <th>Loop</th>
+            </tr>
+            <!--
+                        <tr>
+                          <td>Centro comercial Moctezuma</td>
+                          <td>Francisco Chang</td>
+                          <td>Mexico</td>
+                          <td>3</td>
+                          <td>100</td>
+
+                        </tr>
+                        <tr>
+                          <td>Ernst Handel</td>
+                          <td>Roland Mendel</td>
+                          <td>Austria</td>
+                          <td>3</td>
+                          <td>100</td>
+
+                        </tr>
+                        <tr>
+                          <td>Island Trading</td>
+                          <td>Helen Bennett</td>
+                          <td>UK</td>
+                          <td>3</td>
+                          <td>100</td>
+
+                        </tr>
+                        <tr>
+                          <td>Laughing Bacchus Winecellars</td>
+                          <td>Yoshi Tannamuri</td>
+                          <td>Canada</td>
+                          <td>3</td>
+                          <td>100</td>
+
+                        </tr>
+                        <tr>
+                          <td>Magazzini Alimentari Riuniti</td>
+                          <td>Giovanni Rovelli</td>
+                          <td>Italy</td>
+                          <td>3</td>
+                          <td>100</td>
+
+                        </tr>
+                      -->
+          </table>
+        </div>
+
+        <div class="tracksSection">
+          <h2>Tracks</h2>
+          <table id="tracksTable">
+            <tr>
+              <th>Other Data</th>
+              <th>Component</th>
+              <th>Name</th>
+              <th>Number of Points</th>
+              <th>Length</th>
+              <th>Loop</th>
+            </tr>
+
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="createGPXSection">
+    <div class="additionalHeader">
+      <h2>Additional Functionality</h2>
+      <p>Use the forms below to create a GPX doc, add a route, or find a path</p>
+    </div>
+    <form action="/convertJSONtoGPX" method="get" class="createForm">
+      <h1> Create GPX </h1>
+
+      <fieldset>
+
+        <legend><span class="number">1</span> Your Basic Info</legend>
+
+        <label for="name">GPX File Name:</label>
+        <input id="id1" type="text" id="name" name="user_name">
+
+        <label for="email">Namespace:</label>
+        <input id="id2" type="text" id="mail" name="user_email">
+
+        <label for="password">Version:</label>
+        <input id="id3" type="text" id="password" name="user_password">
+
+        <label for="password">Creator:</label>
+        <input id="id4" type="text" id="password" name="user_password">
+
+
+      </fieldset>
+
+      <button type="submit" id="clickCreate" onClick="refreshPage()">Create GPX File</button>
+
+    </form>
+
+    <form action="index.html" method="get" class="addRouteForm">
+      <h1> Add Route </h1>
+
+      <fieldset>
+
+        <legend><span class="number">1</span> Your Basic Info</legend>
+
+        <label for="name">Route Name:</label>
+        <input type="text" id="rteName" name="user_name">
+
+        <label for="email">Waypoints(enter as pairs, e.g. "lat,lon,lat,lon..etc"):</label>
+        <input type="email" id="mail" name="user_email">
+
+        <label for="job">Select File</label>
+        <select id="choice" name="user_job" class="addRouteFiles">
+        </select>
+
+
+
+      </fieldset>
+
+      <button type="submit" id="clickAddRoute">Add Route</button>
+
+    </form>
+
+    <form action="index.html" method="post" class="findPathForm">
+      <h1> Find Path </h1>
+
+      <fieldset>
+
+        <legend><span class="number">1</span> Your Basic Info</legend>
+
+        <label for="name">GPX File Name:</label>
+        <input type="text" id="name" name="user_name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="mail" name="user_email">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="user_password">
+
+
+
+      </fieldset>
+
+      <button type="submit">Find Path</button>
+
+    </form>
+  </div>
+
+  <div class="stubStuff">
+
+
+    <h3>Download test</h3>
+    If the 3 stub is running and simple.gpx exists in the uploads/ directory on the server, then clicking on the link
+    below will download it from the server.<br>
+    <a href="simple.gpx" download>simple.gpx</a>
+    <p></p>
+
+    <hr>
+    <div id="blah">I am blah</div>
+    <hr>
+    <form ref=' someform' id='someform'>
+      <div class="form-group">
+        <label for="entryBox">Last Name</label>
+        <input type="text" class="form-control" id="entryBox" value="Value" placeholder="Placeholder">
+      </div>
+      <div class="form-group">
+        <input type='submit' class="btn btn-secondary">
+      </div>
+    </form>
+
+    <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+      <div class="form-group">
+        <input type="file" name="uploadFile" class="btn btn-secondary">
+        <input type='submit' value='Upload' class="btn btn-secondary">
+      </div>
+      `
+    </form>
+  </div>
+
+  <div class="databaseSection">
+    <div class="dbHeader">
+      <h2>Connect To A Database</h2>
+      <p>Connect to and populate a database below</p>
+    </div>
+
+    <div class="sideText">
+      <p>Keep username, password and database name in the input field after entering them. <br />Do not delete
+        them.<br /> Execute commands by clicking the buttons</p>
+    </div>
+
+    <form action="index.html" method="post" class="dbForm">
+      <h1> Create Database </h1>
+
+      <fieldset>
+
+        <legend><span class="number">1</span> Your Basic Info</legend>
+
+        <label for="name">Username:</label>
+        <input type="text" id="userName" name="user_name">
+
+        <label for="password">Password:</label>
+        <input type="password" id="userPassword" name="user_password">
+
+        <label for="name">Database:</label>
+        <input type="text" id="dbName" name="user_name">
+
+
+
+      </fieldset>
+
+      <button id="connectDB" type="submit">Create Database</button>
+
+    </form>
+
+    <div class="secondSub-main">
+      <button id="storeFiles" class="button-two"><span><a>Store All Files</a></span></button>
+    </div>
+
+    <div class="thirdSub-main">
+      <button id="clearTables" class="button-two"><span><a>Clear All Data</a></span></button>
+    </div>
+
+    <div class="fourthSub-main">
+      <button id="displayStatus" class="button-two"><span><a>Display DB Status</a></span></button>
+    </div>
+
+
+    <div class="fifthSub-main">
+      <button id="executeQuery" class="button-two"><span><a href="#popup2">Execute Query</a></span></button>
+      <div id="popup2" class="overlay">
+        <div class="newPopup">
+          <a class="close" href="#">&times;</a>
+          <h2>Execute Query</h2>
+          <p>Select a query from the drop-down list below and click submit to execute.</p>
+
+          <div class="moveLeft dropdown toggle">
+            <input id="t2" type="checkbox" checked>
+            <label for="t2">Toggle Menu</label>
+            <ul>
+              <li><a id="firstQuery">Display All Routes</a></li>
+
+
+              <li><a id="secondQuery">Display Routes From A Specific File</a></li>
+              <li><a id="thirdQuery">Display All Points of A Specific Route, Ordered by Point Index</a></li>
+              <li><a id="fourthQuery">Display All Points From A Specific File</a></li>
+              <li><a id="fifthQuery">Display The N Shortest/Longest Routes From A Specific File</a></li>
+            </ul>
+          </div>
+
+          <div class="q1Options">
+            <h3>Select how you would like to order the routes. Clicking the "Name" or "Length" button will make the
+              table appear.</h3>
+
+            <div class="q1Sub-main">
+              <button id="submitBtn" class="button-q1"><span><a id="orderByNames">Name</a></span></button>
+              <button id="submitBtn" class="button-q1"><span><a id="orderByLen">Length</a></span></button>
+            </div>
+
+            <table class="q1RouteTable" id="queryRouteTable">
+              <tr>
+                <th>Route ID</th>
+                <th>Route Name</th>
+                <th>Route Length</th>
+                <th>GPX ID</th>
+              </tr>
+
+
+            </table>
+
+          </div>
+
+
+          <div class="q2Options">
+            <h3>Select the file to display its routes</h3>
+
+            <div id="selectFile">
+
+            </div>
+
+            <div class="q2Sub-main">
+              <button id="secondNameBtn" class="button-q1"><span><a id="">Name</a></span></button>
+              <button id="secondLenBtn" class="button-q1"><span><a id="">Length</a></span></button>
+            </div>
+
+            <table class="q2RouteTable" id="secondQueryRouteTable">
+              <tr>
+                <th>Route Name</th>
+                <th>Route Length</th>
+                <th>File Name</th>
+              </tr>
+
+
+            </table>
+
+          </div>
+
+          <div class="q3Options">
+            <h3>Select Route To Display It's Points</h3>
+
+            <div id="selectRte">
+
+            </div>
+
+
+            <table class="q3RouteTable" id="thirdQueryRouteTable">
+              <tr>
+                <th>Point Index</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+              </tr>
+
+
+            </table>
+
+          </div>
+
+
+          <div class="q4Options">
+            <h3>Select File To Display It's Points</h3>
+
+            <div id="selectFileForPoints">
+
+            </div>
+
+
+            <table class="q4PointTable" id="fourthQueryTable">
+              <tr>
+                <th>Point Index</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+              </tr>
+
+
+            </table>
+
+          </div>
+
+
+          <div class="q5Options">
+            <h3>Display the N shortest/Longest Routes From the Files Below By Filling Out The Form. Fill the form out
+              first, then click on the file to display the routes.</h3>
+            <form class="dbForm">
+              <h1> User Input </h1>
+
+              <fieldset>
+
+                <legend><span class="number">1</span> Your Basic Info</legend>
+
+                <label for="name">N Points:</label>
+                <input type="text" id="nPoints" name="user_name">
+
+                <label for="name">Enter "Shortest" or "Longest":</label>
+                <input type="text" id="displayOption" name="user_name">
+
+              </fieldset>
+            </form>
+
+            <div id="selectNRoutes">
+
+
+            </div>
+
+
+            <table class="q5RouteTable" id="fifthQueryTable">
+              <tr>
+                <th>Route Name</th>
+                <th>Route Length</th>
+                <th>File Name</th>
+              </tr>
+
+
+            </table>
+
+          </div>
+
+
+
+
+          <div class="popupSub-main">
+            <button id="submitBtn" class="button-two"><span><a>Submit</a></span></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Leave me at the bottom of body -->
+    <script src="/index.js"></script>
+
+</body>
+
+</html>
